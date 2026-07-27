@@ -1,0 +1,36 @@
+html {
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+.BG {
+  background-image: url(./imgs&gifs/OIP.png);
+  background-size: cover;
+}
+.Root {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+}
+.Window {
+  border: solid;
+  width: fit-content;
+  border-radius: 25px;
+  padding: 25px;
+}
+.TopBar {
+  display: flex;
+  position: fixed;
+  justify-content: space-between;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: lightblue;
+  bottom: 0%;
+  left: 0%;
+  width: 99vw;
+  z-index: 9999;
+  padding: 10px;
+}
