@@ -15,11 +15,36 @@ html {
   transform: translate(-50%, -50%);
 }
 .Window {
+  position: relative;
+  display: block;
   border: solid;
   width: fit-content;
   border-radius: 25px;
-  padding: 25px;
+  padding: 15px;
 }
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+.sep {
+  margin: 0 -15px;
+  padding: 0;
+  border: none; /* removes default line */
+  height: 2px; /* your custom line thickness */
+  background: #000;
+}
+.title {
+  margin: 0px;
+  padding-top: 0px;
+}
+.closeBtn {
+  font-size: 14px;
+  padding: 4px 10px;
+  display: inline-block;
+  margin: 0;
+  cursor: pointer;
+}
+
 .TopBar {
   display: flex;
   position: fixed;
