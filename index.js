@@ -1,4 +1,6 @@
 var welcomeScreen = document.querySelector("#welcome");
+var welcomeOpen = document.querySelector("#welcomeApp")
+var welcomeClose = document.querySelector("#welcome .closeBtn")
 
 function makeElementdragable(id) {
   // Make the DIV element draggable:
@@ -72,5 +74,11 @@ function open_window(element) {
 }
 
 makeElementdragable("welcome");
+welcomeClose.addEventListener("click",() =>{
+    close_window(welcomeScreen)
+})
+welcomeOpen.addEventListener("click",() =>{
+    open_window(welcomeScreen)
+})
 
 setInterval(update_time, 1000);
