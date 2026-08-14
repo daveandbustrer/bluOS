@@ -80,5 +80,6 @@ function create_window(element){
 }
 
 create_window("welcome")
+create_window("note")
 
 setInterval(update_time, 1000);
