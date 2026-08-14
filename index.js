@@ -1,9 +1,6 @@
-var welcomeScreen = document.querySelector("#welcome");
-var welcomeOpen = document.querySelector("#welcomeApp")
-var welcomeClose = document.querySelector("#welcome .closeBtn")
+
 
 function makeElementdragable(id) {
-  // Make the DIV element draggable:
   dragElement(document.getElementById(id));
 
   // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
@@ -18,41 +15,32 @@ function makeElementdragable(id) {
     if (document.getElementById(element.id + "header")) {
       // Step 4: If present, assign the `dragMouseDown` function to the header's `onmousedown` event.
       // This allows you to drag the window around by its header.
-      document.getElementById(element.id + "header").onmousedown =
-        startDragging;
+      document.getElementById(element.id + "header").onmousedown = startDragging;
     } else {
       // Step 5: If not present, assign the function directly to the draggable element's `onmousedown` event.
       // This allows you to drag the window by holding down anywhere on the window.
       element.onmousedown = startDragging;
     }
 
-    // Step 6: Define the `startDragging` function to capture the initial mouse position and set up event listeners.
     function startDragging(e) {
       e = e || window.event;
       e.preventDefault();
-      // Step 7: Get the mouse cursor position at startup.
       initialX = e.clientX;
       initialY = e.clientY;
-      // Step 8: Set up event listeners for mouse movement (`elementDrag`) and mouse button release (`closeDragElement`).
       document.onmouseup = stopDragging;
       document.onmousemove = elementDrag;
     }
 
-    // Step 9: Define the `elementDrag` function to calculate the new position of the element based on mouse movement.
     function elementDrag(e) {
       e = e || window.event;
       e.preventDefault();
-      // Step 10: Calculate the new cursor position.
       currentX = initialX - e.clientX;
       currentY = initialY - e.clientY;
       initialX = e.clientX;
       initialY = e.clientY;
-      // Step 11: Update the element's new position by modifying its `top` and `left` CSS properties.
       element.style.top = element.offsetTop - currentY + "px";
       element.style.left = element.offsetLeft - currentX + "px";
     }
-
-    // Step 12: Define the `stopDragging` function to stop tracking mouse movement by removing the event listeners.
     function stopDragging() {
       document.onmouseup = null;
       document.onmousemove = null;
@@ -73,12 +61,24 @@ function open_window(element) {
   element.style.display = "block";
 }
 
-makeElementdragable("welcome");
-welcomeClose.addEventListener("click",() =>{
+var welcomeScreen = document.querySelector("#welcome");
+var welcomeOpen = document.querySelector("#welcomeApp")
+var welcomeClose = document.querySelector("#welcome .closeBtn")
+
+function create_window(element){
+  var welcomeScreen = document.querySelector("#"+element);
+  var welcomeOpen = document.querySelector("#"+element+"App")
+  var welcomeClose = document.querySelector("#"+element+" .closeBtn")
+
+  makeElementdragable(element);
+  element.addEventListener("click",() =>{
     close_window(welcomeScreen)
-})
-welcomeOpen.addEventListener("click",() =>{
-    open_window(welcomeScreen)
-})
+  })
+  element.addEventListener("click",() =>{
+      open_window(welcomeScreen)
+  })
+}
+
+create_window("welcome")
 
 setInterval(update_time, 1000);
