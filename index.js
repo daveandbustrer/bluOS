@@ -1,8 +1,9 @@
-
+let highestIndex = 0
+let topBar = document.getElementById("TopBar")
+let formatButton = document.getElementById("format")
 
 function makeElementdragable(id) {
   dragElement(document.getElementById(id));
-
   // Step 1: Define a function called `dragElement` that makes an HTML element draggable.
   function dragElement(element) {
     // Step 2: Set up variables to keep track of the element's position.
@@ -25,6 +26,7 @@ function makeElementdragable(id) {
     function startDragging(e) {
       e = e || window.event;
       e.preventDefault();
+
       initialX = e.clientX;
       initialY = e.clientY;
       document.onmouseup = stopDragging;
@@ -51,7 +53,6 @@ function update_time() {
   var time = new Date().toLocaleString().replace(",", "");
   var clock = window.document.getElementById("clock");
   clock.innerHTML = time;
-  console.log(time);
 }
 function close_window(element) {
   element.style.display = "none";
@@ -59,27 +60,46 @@ function close_window(element) {
 
 function open_window(element) {
   element.style.display = "block";
+  change_highest(element)
 }
-
-var welcomeScreen = document.querySelector("#welcome");
-var welcomeOpen = document.querySelector("#welcomeApp")
-var welcomeClose = document.querySelector("#welcome .closeBtn")
-
+function change_highest(element){
+  highestIndex++;
+  element.style.zIndex = highestIndex;
+  topBar.style.zIndex = highestIndex+1;
+}
+function addWindowHandler(element){
+  element.addEventListener("mousedown",() =>{
+    change_highest(element)
+  })
+}
 function create_window(element){
-  var welcomeScreen = document.querySelector("#"+element);
-  var welcomeOpen = document.querySelector("#"+element+"App")
-  var welcomeClose = document.querySelector("#"+element+" .closeBtn")
+  var Screen = document.querySelector("#"+element);
+  var Open = document.querySelector("#"+element+"App")
+  var Close = document.querySelector("#"+element+" .closeBtn")
 
   makeElementdragable(element);
-  element.addEventListener("click",() =>{
-    close_window(welcomeScreen)
+  addWindowHandler(Screen)
+  Close.addEventListener("click",() =>{
+    close_window(Screen)
   })
-  element.addEventListener("click",() =>{
-      open_window(welcomeScreen)
+  Open.addEventListener("click",() =>{
+    if (Screen.style.display === "none"){
+      open_window(Screen)
+    }else{
+      change_highest(Screen)
+    }
   })
+  close_window(Screen)
 }
+
+
 
 create_window("welcome")
 create_window("note")
+formatButton.onclick = ()=>{
+  let noteArea = document.getElementById("write")
+  let info = noteArea.innerText
+  noteArea.innerHTML = info
+}
 
 setInterval(update_time, 1000);

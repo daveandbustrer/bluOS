@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="index.css" />
   </head>
   <body class="BG">
-    <div class="TopBar">
+    <div id="TopBar" class="TopBar">
       <p>bluOS</p>
       <div class="appBar">
         <img
@@ -20,7 +20,7 @@
           id="noteApp"
           class="app"
           src="imgs&gifs/blu notes.png"
-          alt="welcome app"
+          alt="note app"
         />
         <img class="app" src="imgs&gifs\OIP.png" alt="welcome app" />
         <img class="app" src="imgs&gifs\OIP.png" alt="welcome app" />
@@ -32,12 +32,15 @@
     </div>
     <div class="Root">
       <div id="note" class="Window">
-        <div id="noteheader">
-          <h1 class="title">welcome</h1>
+        <div id="noteheader" class="header">
+          <h1 class="title">notes</h1>
           <p class="closeBtn">X</p>
         </div>
         <hr class="sep" />
-        <p></p>
+        <button id="format" class="format">format</button>
+        <div id="write" contenteditable="true">
+          <span>hello you can write in this box and maybe format idk</span>
+        </div>
       </div>
       <div id="welcome" class="Window">
         <div id="welcomeheader" class="header">
