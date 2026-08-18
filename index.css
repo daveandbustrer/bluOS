@@ -24,6 +24,7 @@ html {
   z-index: 0;
   padding: 15px;
   background-color: rgb(0, 115, 204);
+  max-height: 200px;
 }
 .header {
   display: flex;
@@ -90,4 +91,8 @@ html {
 
 .format:hover {
   background-color: #0098d9;
+}
+.write {
+  overflow-y: auto;
+  max-height: 140px;
 }
