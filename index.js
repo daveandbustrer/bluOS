@@ -23,6 +23,14 @@ const windows = [
           <div id="write" contenteditable="true" class="write">
             <span>hello you can write in this box and maybe format idk</span>
           </div>`,
+    script: () => {
+      const formatButton = document.getElementById("format");
+      formatButton.onclick = () => {
+        let noteArea = document.getElementById("write");
+        let info = noteArea.innerText;
+        noteArea.innerHTML = info;
+      };
+    },
   },
 ];
 
@@ -136,17 +144,14 @@ function create_windows() {
       </div>
     `;
     setTimeout(() => {
+      if (windows[i].script) {
+        windows[i].script();
+      }
       create_window(element);
     }, 0);
   }
 }
 
 create_windows();
-const formatButton = document.getElementById("format");
-formatButton.onclick = () => {
-  let noteArea = document.getElementById("write");
-  let info = noteArea.innerText;
-  noteArea.innerHTML = info;
-};
 
 setInterval(update_time, 1000);
