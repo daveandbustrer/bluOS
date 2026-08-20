@@ -32,6 +32,25 @@ const windows = [
       };
     },
   },
+  // {
+  //   title: "Blu's blog",
+  //   id: "blog",
+  //   content: `<div id="main"></div>`,
+  //   script: () => {
+  //     const content = {
+  //       title: "first",
+  //       date: "8/18/2026 10:45pm",
+  //       main: "hi this is the first test",
+  //     };
+  //     const place = document.querySelector("#main");
+  //     place.innerHTML = `
+  //     <div>${content.title}</div>
+  //     <div>${content.date}</div>
+  //     <main>${content.main}</main>
+
+  //     `;
+  //   },
+  // },
 ];
 
 function makeElementdragable(id) {
@@ -126,10 +145,10 @@ function create_window(element) {
 }
 function create_windows() {
   for (let i in windows) {
-    console.log(i);
-    const title = windows[i].title;
-    const element = windows[i].id ?? title;
-    const content = windows[i].content;
+    const window = windows[i];
+    const title = window.title;
+    const element = window.id ?? title;
+    const content = window.content;
     const root = document.querySelector("#root");
     root.innerHTML += `
     <div id="${element}" class="Window" style = "display:none">
@@ -144,8 +163,8 @@ function create_windows() {
       </div>
     `;
     setTimeout(() => {
-      if (windows[i].script) {
-        windows[i].script();
+      if (window.script) {
+        window.script();
       }
       create_window(element);
     }, 0);
@@ -153,5 +172,6 @@ function create_windows() {
 }
 
 create_windows();
+create_window("blog");
 
 setInterval(update_time, 1000);

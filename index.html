@@ -22,7 +22,12 @@
           src="imgs&gifs/blu notes.png"
           alt="note app"
         />
-        <img class="app" src="imgs&gifs\blu blog.png" alt="welcome app" />
+        <img
+          id="blogApp"
+          class="app"
+          src="imgs&gifs\blu blog.png"
+          alt="welcome app"
+        />
         <img class="app" src="imgs&gifs\OIP.png" alt="welcome app" />
         <img class="app" src="imgs&gifs\OIP.png" alt="welcome app" />
         <img class="app" src="imgs&gifs\OIP.png" alt="welcome app" />
@@ -31,7 +36,21 @@
       <p id="clock" class="time">7/26/2026 10:06 pm</p>
     </div>
     <div id="root" class="Root">
-      <div></div>
+      <div id="blog" class="Window" style="display: none">
+        <div id="blogheader" class="header">
+          <h1 class="title">Blu's blog</h1>
+          <p id="blogclose" class="closeBtn">X</p>
+        </div>
+        <hr class="sep" />
+        <div id="blogcontent" class="content">
+          <div id="main" class="post">
+            <div class="title">first</div>
+            <div class="date">8/18/2026 10:45pm</div>
+            <div class="sep"></div>
+            <div class="body">hi this is the first test</div>
+          </div>
+        </div>
+      </div>
     </div>
     <script src="index.js"></script>
   </body>

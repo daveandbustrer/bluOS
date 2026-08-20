@@ -65,6 +65,7 @@ html {
 }
 .time {
   margin-left: 25px;
+  padding-right: 25px;
 }
 .appBar {
   display: flex;
@@ -95,4 +96,21 @@ html {
 .write {
   overflow-y: auto;
   max-height: 140px;
+}
+
+.post {
+  padding: 5px 10px;
+}
+
+.post .title {
+  margin: 5px 10px;
+  font-size: 75px;
+  font-weight: bolder;
+  letter-spacing: 4px 5px;
+}
+.post .date {
+  color: white;
+}
+.post .sep {
+  margin: 3px 0px;
 }
