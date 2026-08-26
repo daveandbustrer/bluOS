@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 html {
   padding: 0;
   margin: 0;
@@ -104,13 +105,39 @@ html {
 
 .post .title {
   margin: 5px 10px;
+  margin-left: -9px;
+  margin-bottom: -15px;
   font-size: 75px;
   font-weight: bolder;
   letter-spacing: 4px 5px;
+  font-family: "Bebas Neue", "Apple Chancery", serif;
+  color: #faf8f6;
 }
 .post .date {
-  color: white;
+  font-size: small;
+  margin-left: 3% 5px;
+  color: lightgray;
+  font-weight: bold;
 }
 .post .sep {
-  margin: 3px 0px;
+  margin: 2px -1px;
+  margin-left: -10px;
+  width: 75%;
+  margin-bottom: 10px;
+}
+.post .top {
+  margin-left: -10px;
+}
+.page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.changeblog {
+  display: inline-flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-right: -10px;
+  width: 250px;
 }

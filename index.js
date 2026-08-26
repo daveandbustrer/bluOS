@@ -32,25 +32,43 @@ const windows = [
       };
     },
   },
-  // {
-  //   title: "Blu's blog",
-  //   id: "blog",
-  //   content: `<div id="main"></div>`,
-  //   script: () => {
-  //     const content = {
-  //       title: "first",
-  //       date: "8/18/2026 10:45pm",
-  //       main: "hi this is the first test",
-  //     };
-  //     const place = document.querySelector("#main");
-  //     place.innerHTML = `
-  //     <div>${content.title}</div>
-  //     <div>${content.date}</div>
-  //     <main>${content.main}</main>
-
-  //     `;
-  //   },
-  // },
+  {
+    title: "Blu's blog",
+    id: "blog",
+    content: `<div id="main" class="post">
+            <div class="top">
+              <div class="title">first</div>
+              <div class="date">8/18/2026 10:45pm</div>
+              <div class="sep"></div>
+            </div>
+            <div class="body">hi this is the first test</div>
+          </div>
+          <div id="changeblog" class="changeblog">
+            <button id="last">before</button>
+            <div id="page" class="page"></div>
+            <button id="next">next</button>
+          </div>`,
+    script: () => {
+      const content = [
+        {
+          title: "first",
+          date: "8/18/2026 10:45pm",
+          main: "hi this is the first test",
+        },
+      ];
+      const pages = document.querySelector("#changeblog #page");
+      let cur_page_num = 0;
+      let html = ``;
+      for (let i in content) {
+        html += `<div id = ${i}>${Number(i) + 1}</div>`;
+      }
+      pages.innerHTML = html;
+      const cur_page = content[cur_page_num];
+      document.querySelector("#main .title").innerText = cur_page.title;
+      document.querySelector("#main .date").innerText = cur_page.date;
+      document.querySelector("#main .body").innerText = cur_page.main;
+    },
+  },
 ];
 
 function makeElementdragable(id) {
