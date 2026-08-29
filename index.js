@@ -15,6 +15,7 @@ const windows = [
           </p>
           <a href="https://stardance.hackclub.com/">hackclub's stardance</a>
           `,
+    show: "block",
   },
   {
     title: "notes",
@@ -57,7 +58,6 @@ const windows = [
           welcome to the blog thing of my os this is a fun thing as I will be able to talk freely and not have to worry about how people think of my as it is my blog
 
           `,
-          show: "block",
         },
         {
           title: "test",
@@ -74,7 +74,6 @@ const windows = [
       function make_blogpage() {
         let html = ``;
         for (let i = 0; i in content; i++) {
-          console.log(cur_page_num === i, cur_page_num, i);
           html += `<div id = ${i} ${cur_page_num === i && `class = "bold" `}>${Number(i) + 1}</div>`;
         }
         pages.innerHTML = html;
