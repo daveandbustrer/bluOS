@@ -51,22 +51,54 @@ const windows = [
     script: () => {
       const content = [
         {
-          title: "first",
+          title: "Welcome",
+          date: "8/27/2026 10:32 pm",
+          main: `
+          welcome to the blog thing of my os this is a fun thing as I will be able to talk freely and not have to worry about how people think of my as it is my blog
+
+          `,
+          show: "block",
+        },
+        {
+          title: "test",
           date: "8/18/2026 10:45pm",
-          main: "hi this is the first test",
+          main: `
+          hi this is the first test
+          
+          8/27/2026- this is the second test to see if mutli line works with \` but I will see and i will leave this test in since I like it haveing some coding aspect
+          `,
         },
       ];
       const pages = document.querySelector("#changeblog #page");
       let cur_page_num = 0;
-      let html = ``;
-      for (let i in content) {
-        html += `<div id = ${i}>${Number(i) + 1}</div>`;
+      function make_blogpage() {
+        let html = ``;
+        for (let i = 0; i in content; i++) {
+          console.log(cur_page_num === i, cur_page_num, i);
+          html += `<div id = ${i} ${cur_page_num === i && `class = "bold" `}>${Number(i) + 1}</div>`;
+        }
+        pages.innerHTML = html;
+        const cur_page = content[cur_page_num];
+        document.querySelector("#main .title").innerText = cur_page.title;
+        document.querySelector("#main .date").innerText = cur_page.date;
+        document.querySelector("#main .body").innerText = cur_page.main;
       }
-      pages.innerHTML = html;
-      const cur_page = content[cur_page_num];
-      document.querySelector("#main .title").innerText = cur_page.title;
-      document.querySelector("#main .date").innerText = cur_page.date;
-      document.querySelector("#main .body").innerText = cur_page.main;
+      make_blogpage();
+      function change_cur(num) {
+        if (
+          (cur_page_num + num <= content.length - 1) &
+          (cur_page_num + num >= 0)
+        ) {
+          cur_page_num += num;
+          make_blogpage();
+        }
+      }
+      document.querySelector("#changeblog #last").onclick = () => {
+        change_cur(-1);
+      };
+      document.querySelector("#changeblog #next").onclick = () => {
+        change_cur(1);
+      };
     },
   },
 ];
@@ -168,8 +200,9 @@ function create_windows() {
     const element = window.id ?? title;
     const content = window.content;
     const root = document.querySelector("#root");
+    const show = window.show ?? "none";
     root.innerHTML += `
-    <div id="${element}" class="Window" style = "display:none">
+    <div id="${element}" class="Window" style = "display:${show}">
         <div id="${element}header" class="header">
           <h1 class="title">${title}</h1>
           <p id = "${element}close"class="closeBtn">X</p>

@@ -79,6 +79,9 @@ html {
   width: 50px;
   height: 50px;
 }
+#welcome {
+  display: block;
+}
 .format {
   background-color: #00b3ff;
   color: #ffffff;
@@ -97,6 +100,10 @@ html {
 .write {
   overflow-y: auto;
   max-height: 140px;
+}
+
+#blog {
+  max-height: 500px;
 }
 
 .post {
@@ -131,7 +138,13 @@ html {
 .page {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  letter-spacing: 10px;
+}
+
+.page .bold {
+  font-weight: bolder;
+  color: #faf8f6;
 }
 
 .changeblog {
@@ -139,5 +152,12 @@ html {
   justify-content: space-between;
   gap: 10px;
   margin-right: -10px;
-  width: 250px;
+  width: 100%;
+}
+.changeblog button {
+  background-color: rgb(0, 145, 255);
+  box-shadow: none;
+  border: 2px solid #000000;
+  font-weight: bold;
+  color: #faf8f6;
 }
