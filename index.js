@@ -1,3 +1,22 @@
+import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.0";
+let generator;
+
+async function init() {
+  generator = await pipeline("text-generation", "Xenova/distilgpt2", {
+    device: "webgpu",
+    cache_dir: "indexeddb://models",
+  });
+}
+
+await init();
+
+// Generate text without reloading
+const output = await generator("AI is", {
+  max_new_tokens: 30, // smaller = faster
+  temperature: 0.7,
+  top_p: 0.9,
+});
+console.log(output[0].generated_text);
 let highestIndex = 0;
 const topBar = document.getElementById("TopBar");
 const windows = [
@@ -32,6 +51,15 @@ const windows = [
         noteArea.innerHTML = info;
       };
     },
+  },
+  {
+    title: "chatbot",
+    id: "ai",
+    content: `<button id="format" class="format">format</button>
+          <div id="write" contenteditable="true" class="write">
+            <span>hello you can write in this box and maybe format idk</span>
+          </div>`,
+    script: async () => {},
   },
   {
     title: "Blu's blog",
@@ -190,7 +218,6 @@ function create_window(element) {
       change_highest(Screen);
     }
   });
-  close_window(Screen);
 }
 function create_windows() {
   for (let i in windows) {
@@ -222,6 +249,4 @@ function create_windows() {
 }
 
 create_windows();
-create_window("blog");
-
 setInterval(update_time, 1000);
