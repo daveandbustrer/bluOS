@@ -8,6 +8,8 @@ async function sendMessage(userText) {
   return data.reply;
 }
 
+console.log(sendMessage("hello"));
+
 let highestIndex = 0;
 const topBar = document.getElementById("TopBar");
 const windows = [
