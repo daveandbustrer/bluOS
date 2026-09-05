@@ -5,7 +5,7 @@ html {
   overflow: hidden;
 }
 .BG {
-  background-image: url(./imgs&gifs/OIP.png);
+  background-image: url(OIP.png);
   background-size: cover;
 }
 .Root {
