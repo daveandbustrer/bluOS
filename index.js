@@ -1,22 +1,13 @@
-import { pipeline } from "https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.4.0";
-let generator;
-
-async function init() {
-  generator = await pipeline("text-generation", "Xenova/distilgpt2", {
-    device: "webgpu",
-    cache_dir: "indexeddb://models",
+async function sendMessage(userText) {
+  const res = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: userText }),
   });
+  const data = await res.json();
+  return data.reply;
 }
 
-await init();
-
-// Generate text without reloading
-const output = await generator("AI is", {
-  max_new_tokens: 30, // smaller = faster
-  temperature: 0.7,
-  top_p: 0.9,
-});
-console.log(output[0].generated_text);
 let highestIndex = 0;
 const topBar = document.getElementById("TopBar");
 const windows = [
