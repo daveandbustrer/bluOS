@@ -25,7 +25,10 @@ html {
   z-index: 0;
   padding: 15px;
   background-color: rgb(0, 115, 204);
-  max-height: 200px;
+  min-height: 200px;
+  max-height: 50%;
+  overflow-y: hidden;
+  overflow-x: hidden;
 }
 .header {
   display: flex;
@@ -160,4 +163,50 @@ html {
   border: 2px solid #000000;
   font-weight: bold;
   color: #faf8f6;
+}
+#ai {
+  overflow-y: scroll;
+  box-sizing: border-box;
+  width: 700px;
+}
+.message {
+  background-color: rgb(0, 145, 255);
+  width: fit-content;
+  padding: 5px;
+  margin-top: 5px;
+  border: 1px solid black;
+  border-radius: 5px;
+  min-width: 25%;
+  max-width: 80%;
+}
+.message .header {
+  font-weight: bolder;
+}
+.message .text {
+  padding-left: 5px;
+}
+.message .sep {
+  width: 50px;
+  margin-left: 0px;
+}
+.askme {
+  width: 100%;
+}
+.askme input {
+  width: 89%;
+  border: 1px solid black;
+}
+.askme button {
+  width: 8%;
+  background-color: #00b4e0;
+  color: #ffffff;
+  border-radius: 9px;
+  font-size: 16px;
+  border: 2px solid #000000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.askme button:hover {
+  background-color: #0099be;
 }

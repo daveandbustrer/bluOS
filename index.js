@@ -1,26 +1,8 @@
-import Groq from "groq-sdk";
+import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 
-const groq = new Groq({ apiKey: secret.GROQ_API_KEY });
-
-export async function main() {
-  const chatCompletion = await getGroqChatCompletion();
-  // Print the completion returned by the LLM.
-  console.log(chatCompletion.choices[0]?.message?.content || "");
-}
-
-export async function getGroqChatCompletion() {
-  return groq.chat.completions.create({
-    messages: [
-      {
-        role: "user",
-        content: "Explain the importance of fast language models",
-      },
-    ],
-    model: "openai/gpt-oss-20b",
-  });
-}
 let highestIndex = 0;
 const topBar = document.getElementById("TopBar");
+
 const windows = [
   {
     title: "welcome",
@@ -57,11 +39,55 @@ const windows = [
   {
     title: "chatbot",
     id: "ai",
-    content: `<button id="format" class="format">format</button>
-          <div id="write" contenteditable="true" class="write">
-            <span>hello you can write in this box and maybe format idk</span>
-          </div>`,
-    script: async () => {},
+    content: `
+    <div class="chatarea"></div>
+    <div class="askme">
+        <input id = "sendToAI" placeholder="ask me anything" />
+        <button id = "AIbtn" type="submit">↑</button>
+      </div>
+    `,
+    script: () => {
+      const messages = [
+        { role: "system", content: "You are a helpful AI assistant." },
+      ];
+      function addbubble(message) {
+        textplace.innerHTML += `
+        <div class="message" id=${message.role}>
+              <div class="header">${message.role}</div>
+              <hr class="sep" />
+              <div class="text">${message.content}</div>
+        </div>
+            `;
+      }
+      async function addmessage(message) {
+        let reply = { role: "user", content: message };
+        messages.push(reply);
+        addbubble(reply);
+
+        reply = await AIreply(messages);
+        addbubble(reply);
+        messages.push({ role: reply.role, content: reply.content });
+        generating = false;
+      }
+      const textplace = document.querySelector(".chatarea");
+      const AIbtn = document.querySelector("#AIbtn");
+      let generating = false;
+      AIbtn.onclick = () => {
+        const text = document.querySelector("#sendToAI").value;
+        if (text !== "" && !generating) {
+          generating = true;
+          document.querySelector("#sendToAI").value = "";
+          addmessage(text);
+        }
+      };
+      for (let i in messages) {
+        const message = messages[i];
+        if (message.role === "system") {
+          continue;
+        }
+        addbubble(message);
+      }
+    },
   },
   {
     title: "Blu's blog",
@@ -249,6 +275,27 @@ function create_windows() {
     }, 0);
   }
 }
+async function loadmodel(modelId = "Qwen2.5-0.5B-Instruct-q4f16_1-MLC") {
+  const initProgressCallback = (progress) => {
+    console.log("Model loading progress:", progress);
+  };
 
+  const engine = new webllm.MLCEngine({
+    initProgressCallback,
+  });
+
+  await engine.reload(modelId);
+
+  return engine;
+}
+async function AIreply(messages) {
+  const reply = await engine.chat.completions.create({
+    messages,
+  });
+  console.log(reply.choices[0].message);
+  console.log(reply.usage);
+  return reply.choices[0].message;
+}
+const engine = await loadmodel();
 create_windows();
 setInterval(update_time, 1000);
