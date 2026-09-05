@@ -1,15 +1,24 @@
-async function sendMessage(userText) {
-  const res = await fetch("/api/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message: userText }),
-  });
-  const data = await res.json();
-  return data.reply;
+import Groq from "groq-sdk";
+
+const groq = new Groq({ apiKey: secret.GROQ_API_KEY });
+
+export async function main() {
+  const chatCompletion = await getGroqChatCompletion();
+  // Print the completion returned by the LLM.
+  console.log(chatCompletion.choices[0]?.message?.content || "");
 }
 
-console.log(sendMessage("hello"));
-
+export async function getGroqChatCompletion() {
+  return groq.chat.completions.create({
+    messages: [
+      {
+        role: "user",
+        content: "Explain the importance of fast language models",
+      },
+    ],
+    model: "openai/gpt-oss-20b",
+  });
+}
 let highestIndex = 0;
 const topBar = document.getElementById("TopBar");
 const windows = [
