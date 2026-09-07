@@ -255,6 +255,9 @@ html {
 .bar input {
   width: 70%;
 }
+.bar input::placeholder {
+  color: whitesmoke;
+}
 .bar .searchbtn {
   color: white;
   border: 1px solid white;
