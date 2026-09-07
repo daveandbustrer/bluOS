@@ -224,9 +224,40 @@ html {
   border-radius: 10px;
   overflow: hidden;
 }
-#bar {
+.loading #bar {
   height: 100%;
   width: 0%;
-  background: #4caf50;
+  background: #0099be;
   transition: width 0.2s ease;
+}
+
+.bar {
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #007eed;
+  padding: 5px;
+  width: 500px;
+  margin-left: -5%;
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  align-self: center;
+  justify-self: center;
+  margin-right: -5%;
+}
+.bar * {
+  border: none;
+  background-color: inherit;
+  color: #ffffff;
+  display: inherit;
+}
+.bar input {
+  width: 70%;
+}
+.bar .searchbtn {
+  color: white;
+  border: 1px solid white;
+  padding: inherit;
+  border-radius: inherit;
 }

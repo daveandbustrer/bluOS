@@ -144,7 +144,7 @@ const windows = [
           title: "sleep deprived",
           date: "9/7/2026 11:59pm",
           main: `
-          Im like super sleep deprived making this but I just constently yap when im sleep deprived and it's weird and I just start thinking of random topics like just now i was think of making blogs with ai but would that be weid i mean the good would be that it would mean making the nlogs faster but the con is im using ai
+          Im like super sleep deprived making this but I just constently yap when im sleep deprived and it's weird and I just start thinking of random topics like just now i was think of making blogs with ai but would that be weid i mean the good would be that it would mean making the nlogs faster but the con is im using ai. but those are minor issues I could churn out blogs so fast I might need to add higher jumps
           `,
         },
       ];
@@ -176,6 +176,25 @@ const windows = [
       };
       document.querySelector("#changeblog #next").onclick = () => {
         change_cur(1);
+      };
+    },
+  },
+  {
+    title: "Blu's search",
+    id: "search",
+    icon: "internet",
+    content: `
+     <div class = "bar">
+    <input  type="text" placeholder="type to search..."></input>
+    <button class="searchbtn" type="submit">search</button>
+    </div>
+    `,
+    script: () => {
+      const searchbtn = document.querySelector(".searchbtn");
+      searchbtn.onclick = () => {
+        let search = document.querySelector(".bar input").value;
+        if (search)
+          window.location.href = `https://www.google.com/search?q=${search}`;
       };
     },
   },
@@ -349,10 +368,9 @@ function create_bar() {
       <p id="clock" class="time"></p>
     </div>
     <div id="root" class="Root"></div>
-    <script type="module" src="index.js"></script>
     `;
 }
-const engine = await loadmodel();
+// const engine = await loadmodel();
 create_bar();
 create_windows();
 update_time();
