@@ -1,12 +1,11 @@
 import * as webllm from "https://esm.run/@mlc-ai/web-llm";
 
 let highestIndex = 0;
-const topBar = document.getElementById("TopBar");
-
 const windows = [
   {
     title: "welcome",
     id: "welcome",
+    icon: "endless",
     content: `
           <p>
             welcome to the bluOS. this is a OS for stardance. a program from
@@ -23,6 +22,7 @@ const windows = [
   {
     title: "notes",
     id: "note",
+    icon: "blu notes",
     content: `<button id="format" class="format">format</button>
           <div id="write" contenteditable="true" class="write">
             <span>hello you can write in this box and maybe format idk</span>
@@ -39,6 +39,7 @@ const windows = [
   {
     title: "chatbot",
     id: "ai",
+    icon: "aiApp",
     content: `
     <div class="chatarea"></div>
     <div class="askme">
@@ -92,6 +93,7 @@ const windows = [
   {
     title: "Blu's blog",
     id: "blog",
+    icon: "blu blog",
     content: `<div id="main" class="post">
             <div class="top">
               <div class="title">first</div>
@@ -122,6 +124,27 @@ const windows = [
           hi this is the first test
           
           8/27/2026- this is the second test to see if mutli line works with \` but I will see and i will leave this test in since I like it haveing some coding aspect
+          `,
+        },
+        {
+          title: "devlog issues",
+          date: "9/6/2026 11:53pm",
+          main: `
+          so when i was doing my devlog on star dance I had thought that devlog was posted and I had extra hours ontop of that but noo the devlog just didn't want to post instead Me thinking it was on extra one I made another devlog like "oh I have more hours sweet" then I look at it and it was like "nope you don't get that other devlog you only get the new mistake one". when I tried to fix it it just didn't want to. so that was fun but hey at least im using the blog to rant about it but other then that there is probally not much use for this but hey this is fun just seeing what im writing right... right.
+          `,
+        },
+        {
+          title: "minecraft mods",
+          date: "9/6/2026 11:59pm",
+          main: `
+          you know whats fun about minecraft it's the mods. the game itself is fun but mods make it intesting if I wanted to play normal minecraft I would just play on my xbox or smth but on java the main reason im playing it is to have mods on and some mods I make are funner then others like for example im currently making a mod to be like a vanilla+ style mod with a good amount of optimization with other mods to inhance the gameplay and I really need to make an actual plan of what mods I want and alternatives and other things I could add cause it seems fun but anyways modding is the main reasons I play minecraft but other then mods tha other thing I do play sometimes is servers I don't play them often since I can't find fun ones but I do play sometimes.
+          `,
+        },
+        {
+          title: "sleep deprived",
+          date: "9/7/2026 11:59pm",
+          main: `
+          Im like super sleep deprived making this but I just constently yap when im sleep deprived and it's weird and I just start thinking of random topics like just now i was think of making blogs with ai but would that be weid i mean the good would be that it would mean making the nlogs faster but the con is im using ai
           `,
         },
       ];
@@ -220,6 +243,7 @@ function open_window(element) {
   change_highest(element);
 }
 function change_highest(element) {
+  const topBar = document.getElementById("TopBar");
   highestIndex++;
   element.style.zIndex = highestIndex;
   topBar.style.zIndex = highestIndex + 1;
@@ -229,7 +253,7 @@ function addWindowHandler(element) {
     change_highest(element);
   });
 }
-function create_window(element) {
+function create_window_drag(element) {
   var Screen = document.querySelector("#" + element);
   var Open = document.querySelector("#" + element + "App");
   var Close = document.querySelector("#" + element + "close");
@@ -247,15 +271,30 @@ function create_window(element) {
     }
   });
 }
-function create_windows() {
-  for (let i in windows) {
-    const window = windows[i];
-    const title = window.title;
-    const element = window.id ?? title;
-    const content = window.content;
-    const root = document.querySelector("#root");
-    const show = window.show ?? "none";
-    root.innerHTML += `
+function create_app(window) {
+  const ID = window.id;
+  const appbar = document.querySelector(".appBar");
+  appbar.innerHTML += `<img
+          id="${ID}App"
+          class="app"
+          src="imgs&gifs\\${window.icon}.png"
+          alt="${ID} app"
+        />`;
+}
+function set_scripts(window) {
+  setTimeout(() => {
+    if (window.script) window.script();
+    create_window_drag(window.id ?? window.title);
+  }, 0);
+}
+
+function create_windowHTML(window) {
+  const title = window.title;
+  const element = window.id ?? title;
+  const show = window.show ?? "none";
+
+  const root = document.querySelector("#root");
+  root.innerHTML += `
     <div id="${element}" class="Window" style = "display:${show}">
         <div id="${element}header" class="header">
           <h1 class="title">${title}</h1>
@@ -263,21 +302,28 @@ function create_windows() {
         </div>
         <hr class="sep" />
         <div id="${element}content" class="content">
-          ${content}
+          ${window.content}
         </div>
-      </div>
-    `;
-    setTimeout(() => {
-      if (window.script) {
-        window.script();
-      }
-      create_window(element);
-    }, 0);
+      </div>`;
+}
+
+function create_window(window) {
+  create_app(window);
+  create_windowHTML(window);
+  set_scripts(window);
+}
+function create_windows() {
+  for (let i in windows) {
+    const window = windows[i];
+    create_window(window);
   }
 }
 async function loadmodel(modelId = "Qwen2.5-0.5B-Instruct-q4f16_1-MLC") {
   const initProgressCallback = (progress) => {
-    console.log("Model loading progress:", progress);
+    const bar = document.getElementById("bar");
+    const note = document.getElementById("loadingnotes");
+    bar.style.width = String(progress.progress * 100) + "%";
+    note.innerText = progress.text;
   };
 
   const engine = new webllm.MLCEngine({
@@ -292,10 +338,22 @@ async function AIreply(messages) {
   const reply = await engine.chat.completions.create({
     messages,
   });
-  console.log(reply.choices[0].message);
-  console.log(reply.usage);
   return reply.choices[0].message;
 }
+function create_bar() {
+  const body = document.querySelector("body");
+  body.style.backgroundImage = "url(./imgs&gifs/OIP.png)";
+  body.innerHTML = `<div id="TopBar" class="TopBar">
+      <p>bluOS</p>
+      <div class="appBar"></div>
+      <p id="clock" class="time"></p>
+    </div>
+    <div id="root" class="Root"></div>
+    <script type="module" src="index.js"></script>
+    `;
+}
 const engine = await loadmodel();
+create_bar();
 create_windows();
+update_time();
 setInterval(update_time, 1000);
