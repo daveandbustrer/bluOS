@@ -370,7 +370,7 @@ function create_bar() {
     <div id="root" class="Root"></div>
     `;
 }
-// const engine = await loadmodel();
+const engine = await loadmodel();
 create_bar();
 create_windows();
 update_time();
